@@ -1,11 +1,14 @@
 package com.accesdades.mongo.Mapper;
 
+import org.mapstruct.Mapper;
+
 import com.accesdades.mongo.DTO.VideoGameDTO;
 import com.accesdades.mongo.Model.VideoGame;
 
+@Mapper
 public class VideoGameMapper {
-    // Mapper methods to convert between VideoGame and VideoGameDTO
-    public static VideoGameDTO toDTO(VideoGame videoGame) {
-        
-    }
+    private String id;
+    private String camp_1;
+    private int camp_2;
+
 }
