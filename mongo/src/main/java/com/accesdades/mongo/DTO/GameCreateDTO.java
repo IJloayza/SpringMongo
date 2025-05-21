@@ -9,8 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class VideoGameDTO {
-    private String game;
+public class GameCreateDTO {
+    private String name;
     private String gameLink;
     private int year;
     private String genre;
@@ -20,4 +20,5 @@ public class VideoGameDTO {
     private String publisherLink;
     private String platform;
     private String platformLink;
+  
 }

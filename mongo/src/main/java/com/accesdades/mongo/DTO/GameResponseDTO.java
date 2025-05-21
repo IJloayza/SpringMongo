@@ -1,26 +1,16 @@
-package com.accesdades.mongo.Model;
-
-import java.io.Serializable;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package com.accesdades.mongo.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Document(collection = "Videogame")
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class VideoGame implements Serializable {
-	@Id
-    private String id;
-    private String game;
+public class GameResponseDTO {
+    private String name;
     private String gameLink;
     private int year;
     private String genre;
