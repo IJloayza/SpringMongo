@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -37,12 +38,16 @@ public class RESTController {
         return ResponseEntity.ok(gameService.findAll());
     }
 
-    // GET BY ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Mono<GameResponseDTO>> findById(@PathVariable String id) {
-        return ResponseEntity.ok(gameService.findById(id)
-            .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found"))));
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity<Mono<GameResponseDTO>> findById(@PathVariable String id) {
+      return ResponseEntity.ok(gameService.findById(id)
+          .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found")))););
+  }
+
+  @GetMapping("/byName")
+  public ResponseEntity<Flux<GameResponseDTO>> findByName(@RequestParam String name) {
+      return ResponseEntity.ok(gameService.findByName(name));
+  }
 
     // POST
     @PostMapping("/save")
