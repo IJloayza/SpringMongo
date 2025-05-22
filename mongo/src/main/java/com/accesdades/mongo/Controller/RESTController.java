@@ -32,22 +32,23 @@ public class RESTController {
         this.gameService = gameService;
     }
 
-    // GET ALL
+    // GET
     @GetMapping("/all")
     public ResponseEntity<Flux<GameResponseDTO>> findAll() {
         return ResponseEntity.ok(gameService.findAll());
     }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Mono<GameResponseDTO>> findById(@PathVariable String id) {
-      return ResponseEntity.ok(gameService.findById(id)
-          .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found")))););
-  }
+    @GetMapping("/{id}")
+    public ResponseEntity<Mono<GameResponseDTO>> findById(@PathVariable String id) {
+        return ResponseEntity.ok(gameService.findById(id)
+            .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found"))));
+    }
 
-  @GetMapping("/byName")
-  public ResponseEntity<Flux<GameResponseDTO>> findByName(@RequestParam String name) {
-      return ResponseEntity.ok(gameService.findByName(name));
-  }
+    @GetMapping("/byName")
+    public ResponseEntity<Flux<GameResponseDTO>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(gameService.findByName(name)
+            .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found"))));
+    }
 
     // POST
     @PostMapping("/save")
@@ -66,7 +67,7 @@ public class RESTController {
 
     // DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Mono<Void>> delete(@PathVariable String id) {
-        return ResponseEntity.noContent().build();
+    public Mono<ResponseEntity<Void>> delete(@PathVariable String id) {
+      return gameService.delete(id).then(Mono.just(ResponseEntity.noContent().build()));
     }
 }
