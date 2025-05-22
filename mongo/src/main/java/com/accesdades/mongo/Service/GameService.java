@@ -34,8 +34,10 @@ public class GameService {
     }
 
     public Mono<GameResponseDTO> update(String id, GameCreateDTO videoGameDTO) {
-        return gameRepository.save(mapper.toModel(videoGameDTO))
-                .map(mapper::toDTO);
+        return gameRepository.findById(id).flatMap(game -> {
+                mapper.updateFromDto(videoGameDTO, game);
+                return gameRepository.save(game);
+            }).map(mapper::toDTO);
     }
 
     public Mono<Void> delete(String id) {
